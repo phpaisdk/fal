@@ -8,7 +8,7 @@
 
 ------
 
-[fal.ai](https://fal.ai) provider for the PHP AI SDK — **image**, **speech**, **transcription**, and **video** generation via `fal.run` and `queue.fal.run`, aligned with `@ai-sdk/fal`.
+The fal provider package for the PHP AI SDK supports **image**, **speech**, **transcription**, and **video** generation via `fal.run` and `queue.fal.run`, aligned with `@ai-sdk/fal`.
 
 ## Installation
 
@@ -50,6 +50,17 @@ Generate::speech()
 Video generation submits to `queue.fal.run` and polls until a `video.url` is available (timeouts configurable via `videoPollIntervalMs` / `videoPollTimeoutMs`).
 
 Language and embedding modalities are not implemented on fal in this package and throw `NoSuchModelException`.
+
+## Documentation
+
+- [PHP AI SDK documentation](https://phpaisdk.com/docs)
+- [fal documentation](https://phpaisdk.com/docs/fal)
+
+## Community
+
+- [Contributing](https://github.com/phpaisdk/.github/blob/main/CONTRIBUTING.md)
+- [Support](https://github.com/phpaisdk/.github/blob/main/SUPPORT.md)
+- For private security reports, email [security@phpaisdk.com](mailto:security@phpaisdk.com).
 
 ## License
 
