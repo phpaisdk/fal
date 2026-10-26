@@ -8,10 +8,11 @@ Official fal provider for the PHP AI SDK. Part of the framework-agnostic [PHP AI
 use AiSdk\Content;
 use AiSdk\Fal;
 use AiSdk\Generate;
+use AiSdk\LocalFile;
 
 Fal::create(['apiKey' => '...']); // optional: environment variables below are read automatically
 
-$result = Generate::transcription(Content::audio('/path/to/audio.mp3'))
+$result = Generate::transcription(Content::audio(LocalFile::at('/path/to/audio.mp3')))
     ->model(Fal::model('model-id'))
     ->run();
 
