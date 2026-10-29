@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AiSdk\Fal\Models;
 
+use AiSdk\Exceptions\InvalidResponseException;
 use AiSdk\Contracts\BaseModel;
 use AiSdk\Contracts\SpeechModelInterface;
 use AiSdk\Fal\FalOptions;
@@ -29,7 +30,7 @@ final class FalSpeechModel extends BaseModel implements SpeechModelInterface
         $payload = $this->runner($this->options->sdk)->postJson(Url::joinPath($this->options->baseUrl, '/' . $this->modelId), array_replace(['text' => $request->input, 'voice' => $request->voice], $request->providerOptionsFor($this->provider())), $this->options->authHeaders(), $this->provider());
         $url = $payload['audio']['url'] ?? null;
         if (!is_string($url) || $url === '') {
-            throw new \RuntimeException('fal returned no audio URL.');
+            throw new InvalidResponseException('fal returned no audio URL.');
         }
         $sdk = $this->options->sdk ?? \AiSdk\Generate::sdk();
         $response = $sdk->httpClient->sendRequest($sdk->requestFactory->createRequest('GET', $url));
