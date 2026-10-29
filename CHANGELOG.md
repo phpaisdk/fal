@@ -2,6 +2,11 @@
 
 Notable changes to `aisdk/fal`. Release notes are also published at https://github.com/phpaisdk/fal/releases.
 
+## Unreleased (v0.10.2)
+
+- Bound audio downloads and reject untrusted queue response origins before sending credentials.
+- Requires `aisdk/core ^0.10.2` at release.
+
 ## v0.10.1 — 2026-10-29
 
 - Raise SDK exceptions instead of native PHP ones.

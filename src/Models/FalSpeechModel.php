@@ -13,10 +13,13 @@ use AiSdk\Responses\SpeechResponse;
 use AiSdk\Results\AudioData;
 use AiSdk\Support\Usage;
 use AiSdk\Utils\Support\Url;
+use AiSdk\Utils\Http\RemoteFetch;
+use Closure;
 
 final class FalSpeechModel extends BaseModel implements SpeechModelInterface
 {
-    public function __construct(private readonly string $modelId, private readonly FalOptions $options) {}
+    /** @param (Closure(string): list<string>)|null $dnsResolver */
+    public function __construct(private readonly string $modelId, private readonly FalOptions $options, private readonly ?Closure $dnsResolver = null) {}
     public function provider(): string
     {
         return FalOptions::PROVIDER_NAME;
@@ -33,7 +36,7 @@ final class FalSpeechModel extends BaseModel implements SpeechModelInterface
             throw new InvalidResponseException('fal returned no audio URL.');
         }
         $sdk = $this->options->sdk ?? \AiSdk\Generate::sdk();
-        $response = $sdk->httpClient->sendRequest($sdk->requestFactory->createRequest('GET', $url));
-        return new SpeechResponse(new AudioData((string) $response->getBody(), (string) ($payload['audio']['content_type'] ?? 'audio/mpeg')), Usage::empty(), $payload, [$this->provider() => ['url' => $url]]);
+        $response = RemoteFetch::bytes($sdk, $url, dnsResolver: $this->dnsResolver);
+        return new SpeechResponse(new AudioData($response->body, (string) ($payload['audio']['content_type'] ?? 'audio/mpeg')), Usage::empty(), $payload, [$this->provider() => ['url' => $url]]);
     }
 }
